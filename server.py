@@ -16,17 +16,24 @@ def route_edit():
 
 @app.route('/save-story', methods=['POST'])
 def route_save():
-     print('POST request received!')
-     headers = ["id", "title", "story", "accept", "value", "time", "status"]
-     
-     #with open("datas.csv", "a", newline='') as csvfile:
-
-     return redirect('/')
+    print('POST request received!')
+    if request.method == 'POST':
+        title = request.form['title']
+        story = request.form['story']
+        accept = request.form['accept']
+        value = request.form['value']
+        time = request.form['time']
+        status = request.form['status']
+        fieldnames = ["title", "story", "accept", "value", "time", "status"]
+        with open("datas.csv", "a") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writerow({'title': title, 'story': story, 'accept': accept, 'value': value, 'time': time, 'status': status})
+    return redirect('/')
 
 
 if __name__ == "__main__":
-  app.secret_key = 'my_secret_key'  # Change the content of this string
-  app.run(
-      debug=True,  # Allow verbose error reports
-      port=5000  # Set custom port
+    app.secret_key = 'my_secret_key'  # Change the content of this string
+    app.run(
+        debug=True,  # Allow verbose error reports
+        port=5000  # Set custom port
   )
