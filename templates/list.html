@@ -11,4 +11,31 @@
 <h1>User Story Manager</h1>
 
 <form action="/story">
-<p><button type="submit">Add new User Story</button></p>
+<p><button type="submit">Add new User Story</button></p><br>
+
+<table>
+    <thead>
+        <tr>
+            <!--<td><strong>ID</td>-->
+            <td><strong>Story Title</td>
+            <td><strong>User Story</td>
+            <td><strong>Acceptance Criteria</td>
+            <td><strong>Business Value</td>
+            <td><strong>Estimation</td>
+            <td><strong>Status</td>
+        </tr>
+    </thead>
+    
+    {%for line in datas_list%}
+        <tr>
+            <td>{{line[0]}}</td>
+            <td>{{line[1]}}</td>
+            <td>{{line[2]}}</td>
+            <td>{{line[3]}}</td>
+            <td>{{line[4]}}</td>
+            <td>{{line[5]}}</td>
+        </tr>
+    {%endfor%}
+</table>
+
+

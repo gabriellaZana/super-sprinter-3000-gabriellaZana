@@ -6,7 +6,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def route_index():
-    return render_template('list.html')
+    with open("datas.csv", "r") as csvfile:
+        reader = csv.reader(csvfile)
+        datas_list = list(reader)
+    print(datas_list)
+    return render_template('list.html', datas_list=datas_list)
 
 
 @app.route('/story')
