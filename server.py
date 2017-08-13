@@ -7,11 +7,15 @@ id_pos = None
 
 @app.route('/')
 def route_index():
+    global id_pos
     datas_list = []
     with open("datas.csv", "r") as csvfile:
         reader = csv.reader(csvfile)
         datas_list = list(reader)
+    if datas_list:
+        id_pos = int(datas_list[-1][0])
     return render_template('list.html', datas_list=datas_list)
+
 
 
 @app.route('/story')
@@ -21,13 +25,13 @@ def route_edit():
         id_pos = 1
     else:
         id_pos += 1
-    
     return render_template('form.html', id_pos=id_pos)
 
 
 @app.route('/save-story', methods=['POST'])
 def route_save():
     print('POST request received!')
+    global id_pos
     if request.method == 'POST':
         title = request.form['title']
         story = request.form['story']
