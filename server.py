@@ -17,6 +17,10 @@ def route_index():
     return render_template('list.html', datas_list=datas_list)
 
 
+@app.route('/list')
+def route_list():
+    return route_index()
+
 
 @app.route('/story')
 def route_edit():
