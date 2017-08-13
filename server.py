@@ -5,15 +5,22 @@ import csv
 app = Flask(__name__)
 id_pos = None
 
-@app.route('/')
-def route_index():
-    global id_pos
-    datas_list = []
+
+def datas_reader():
     with open("datas.csv", "r") as csvfile:
         reader = csv.reader(csvfile)
         datas_list = list(reader)
+    return datas_list
+
+
+@app.route('/')
+def route_index():
+    global id_pos
+    datas_list = datas_reader()
     if datas_list:
         id_pos = int(datas_list[-1][0])
+    elif not datas_list:
+        id_pos = 0
     return render_template('list.html', datas_list=datas_list)
 
 
@@ -51,9 +58,15 @@ def route_save():
     return redirect('/')
 
 
+@app.route('/story/<id>')
+def route_story_id(id=None):
+    datas_list = datas_reader
+    return render_template('form.html')
+
+
 if __name__ == "__main__":
     app.secret_key = 'my_secret_key'  # Change the content of this string
     app.run(
         debug=True,  # Allow verbose error reports
-        port=5000  # Set custom port
-  )
+        port=5000  # Set custom post
+        )
