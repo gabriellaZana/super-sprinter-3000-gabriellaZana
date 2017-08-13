@@ -1,21 +1,28 @@
 from flask import Flask, render_template, redirect, request, session
 import csv
 
-app = Flask(__name__)
 
+app = Flask(__name__)
+id_pos = None
 
 @app.route('/')
 def route_index():
+    datas_list = []
     with open("datas.csv", "r") as csvfile:
         reader = csv.reader(csvfile)
         datas_list = list(reader)
-    print(datas_list)
     return render_template('list.html', datas_list=datas_list)
 
 
 @app.route('/story')
 def route_edit():
-    return render_template('form.html')
+    global id_pos
+    if id_pos is None:
+        id_pos = 1
+    else:
+        id_pos += 1
+    
+    return render_template('form.html', id_pos=id_pos)
 
 
 @app.route('/save-story', methods=['POST'])
@@ -28,10 +35,11 @@ def route_save():
         value = request.form['value']
         time = request.form['time']
         status = request.form['status']
-        fieldnames = ["title", "story", "accept", "value", "time", "status"]
+        id_ = request.form.get("id_")
+        fieldnames = ["id_", "title", "story", "accept", "value", "time", "status"]
         with open("datas.csv", "a") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow({'title': title, 'story': story, 'accept': accept, 'value': value, 'time': time, 'status': status})
+            writer.writerow({'id_': id_, 'title': title, 'story': story, 'accept': accept, 'value': value, 'time': time, 'status': status})
     return redirect('/')
 
 

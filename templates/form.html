@@ -13,6 +13,9 @@
 
 <form action="/save-story" method="POST">
 
+    <label for="id_"></label>
+        <input value = {{id_pos}} type=hidden name="id_">
+
     <p><label for="title">Story Title</label><br>
         <input name="title" size="91"></p>
 
@@ -38,5 +41,5 @@
         </select></p>
     <br>
     <br>
-    <p><button type="submit">Create"</button></p>
+    <p><button type="submit">Create</button></p>
 

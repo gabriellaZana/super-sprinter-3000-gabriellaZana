@@ -16,7 +16,7 @@
 <table>
     <thead>
         <tr>
-            <!--<td><strong>ID</td>-->
+            <td><strong>ID</td>
             <td><strong>Story Title</td>
             <td><strong>User Story</td>
             <td><strong>Acceptance Criteria</td>
@@ -25,7 +25,7 @@
             <td><strong>Status</td>
         </tr>
     </thead>
-    
+    <tbody>
     {%for line in datas_list%}
         <tr>
             <td>{{line[0]}}</td>
@@ -34,8 +34,13 @@
             <td>{{line[3]}}</td>
             <td>{{line[4]}}</td>
             <td>{{line[5]}}</td>
+            <td>{{line[6]}}</td>
+            <td>{{line[7]}}</td>
+            <td><img src="http://icongal.com/gallery/download/93429/256/png" width="20" height="20"></td>
+            <td><img src="http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_563973ab0e1a6-210x210.png" width="20" height="20"></td>
         </tr>
     {%endfor%}
+    </tbody>
 </table>
 
 
