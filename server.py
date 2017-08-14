@@ -30,10 +30,22 @@ def route_list():
     return route_index()
 
 
+@app.route('/delete/<id>')
+def route_delete(id=None):
+    datas_list = datas_reader()
+    id_pos = int(id)
+    for row in datas_list:
+        if row[0] == str(id_pos):
+            datas_list[id_pos-1] = []
+    print(datas_list)
+    return redirect('/')
+
+
 @app.route('/story')
 def route_edit():
     global id_pos
     global edit
+    edit = False
     if id_pos is None:
         id_pos = 1
     else:
@@ -62,11 +74,12 @@ def route_save():
 
 @app.route('/story/<id>')
 def route_story_id(id=None):
-    id_pos = id
+    id_pos = int(id)
     global edit
     edit = True
     datas_list = datas_reader()
-    return render_template('form.html', id_pos=id_pos, edit=edit)
+    edit_data_list = (datas_list[id_pos-1])
+    return render_template('form.html', id_pos=id_pos, edit=edit, edit_data_list=edit_data_list)
 
 
 if __name__ == "__main__":

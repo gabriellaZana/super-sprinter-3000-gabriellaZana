@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     {% if not edit %}
     <title>Super Sprinter 3000 - Add new Story</title>
-    {%elif edit%}
+    {% elif edit %}
     <title>Super Sprinter 3000 - Edit Story</title>
     {% endif %}
 </head>
@@ -20,36 +20,39 @@
 <h1>User Story manager - Edit Story</h1>
 {% endif %}
 
-
+{% if not edit %}
 <form action="/save-story" method="POST">
+{% elif edit %}
+<form action="/story/{{edit_data_list[0]}}" method="POST">
+{% endif %}
 
     <label for="id_"></label>
         <input value = {{id_pos}} type=hidden name="id_">
 
     <p><label for="title">Story Title</label><br>
-        <input name="title" size="91"></p>
+        <input name="title" size="91" value="{{edit_data_list[1] if edit else ''}}"></p>
 
     <p><label for "story">User Story</label><br>
-        <textarea rows="10" cols="70" name="story"></textarea></p>
-    
+        <textarea rows="10" cols="70" name="story">{{edit_data_list[2] if edit else ''}}</textarea></p>
+       
     <p><label for "accept">Acceptance criteria</label><br>
-        <textarea rows="10" cols="70" name="accept"></textarea></p>
+        <textarea rows="10" cols="70" name="accept">{{edit_data_list[3] if edit else ''}}</textarea></p>
     
     <p><label for "value">Business Value</label><br>
-        <input type="number" name="value" min="100" max="1500" step="100" value="1000"></p>
+        <input type="number" name="value" min="100" max="1500" step="100" value="{{edit_data_list[4] if edit else '1000'}}"></p>
 
     <p><label for "time">Estimation (h)</label><br>
-        <input type="number" name="time" min="0.5" max="40" step="0.5" value="2.5"></p>
+        <input type="number" name="time" min="0.5" max="40" step="0.5" value="{{edit_data_list[5] if edit else '2.5'}}"></p>
 
     <p><label for "status">Status</label><br>
         <select name="status">
-            <option selected>Planning</option>
-            <option>TODO</option>
-            <option>In Progress</option>
-            <option>Review</option>
-            <option>Done</option>
+            <option {{ 'selected' if edit and edit_data_list[6] == 'Planning' else '' }}>Planning</option>
+            <option {{ 'selected' if edit and edit_data_list[6] == 'TODO' else '' }}>TODO</option>
+            <option {{ 'selected' if edit and edit_data_list[6] == 'In Progress' else '' }}>In Progress</option>
+            <option {{ 'selected' if edit and edit_data_list[6] == 'Review' else '' }}>Review</option>
+            <option {{ 'selected' if edit and edit_data_list[6] == 'Done' else '' }}>Done</option>
         </select></p>
     <br>
     <br>
-    <p><button type="submit">Create</button></p>
+    <p><button type="submit">{{"Update" if edit else "Create"}}</button></p>
 
