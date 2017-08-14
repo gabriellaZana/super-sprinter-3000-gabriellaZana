@@ -4,12 +4,22 @@
 
 <head>
     <meta charset="utf-8">
+    {% if not edit %}
     <title>Super Sprinter 3000 - Add new Story</title>
+    {%elif edit%}
+    <title>Super Sprinter 3000 - Edit Story</title>
+    {% endif %}
 </head>
 
 
 <body>
+{% if not edit %}
 <h1>User Story manager - Add new Story</h1>
+
+{% elif edit %}
+<h1>User Story manager - Edit Story</h1>
+{% endif %}
+
 
 <form action="/save-story" method="POST">
 

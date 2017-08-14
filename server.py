@@ -4,6 +4,7 @@ import csv
 
 app = Flask(__name__)
 id_pos = None
+edit = None
 
 
 def datas_reader():
@@ -32,11 +33,12 @@ def route_list():
 @app.route('/story')
 def route_edit():
     global id_pos
+    global edit
     if id_pos is None:
         id_pos = 1
     else:
         id_pos += 1
-    return render_template('form.html', id_pos=id_pos)
+    return render_template('form.html', id_pos=id_pos, edit=edit)
 
 
 @app.route('/save-story', methods=['POST'])
@@ -60,8 +62,11 @@ def route_save():
 
 @app.route('/story/<id>')
 def route_story_id(id=None):
-    datas_list = datas_reader
-    return render_template('form.html')
+    id_pos = id
+    global edit
+    edit = True
+    datas_list = datas_reader()
+    return render_template('form.html', id_pos=id_pos, edit=edit)
 
 
 if __name__ == "__main__":
