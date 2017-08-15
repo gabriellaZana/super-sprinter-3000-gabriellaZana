@@ -15,15 +15,14 @@
 <body>
 {% if not edit %}
 <h1>User Story manager - Add new Story</h1>
-
-{% elif edit %}
+{% else %}
 <h1>User Story manager - Edit Story</h1>
 {% endif %}
 
 {% if not edit %}
 <form action="/save-story" method="POST">
-{% elif edit %}
-<form action="/story/{{edit_data_list[0]}}" method="POST">
+{% else %}
+<form action="/edit-story/{{ edit_data_list[0] }}" method="POST">
 {% endif %}
 
     <label for="id_"></label>
@@ -55,4 +54,5 @@
     <br>
     <br>
     <p><button type="submit">{{"Update" if edit else "Create"}}</button></p>
+</form>
 

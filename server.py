@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, session
 import csv
+import sys
 
 
 app = Flask(__name__)
@@ -37,7 +38,6 @@ def route_delete(id=None):
     for row in datas_list:
         if row[0] == str(id_pos):
             datas_list[id_pos-1] = []
-    print(datas_list)
     return redirect('/')
 
 
@@ -72,6 +72,33 @@ def route_save():
     return redirect('/')
 
 
+@app.route('/edit-story/<id>', methods=['POST'])
+def route_edit_story(id=None):
+    id_pos = int(id)
+    with open("datas.csv", "r") as csvfile:
+        reader = csv.reader(csvfile)
+        datas_list = list(reader)
+    print(datas_list)
+    if request.method == 'POST':
+                        title = request.form['title']
+                        story = request.form['story']
+                        accept = request.form['accept']
+                        value = request.form['value']
+                        time = request.form['time']
+                        status = request.form['status']
+                        id_ = request.form.get("id_")
+                        fieldnames = ["id_", "title", "story", "accept", "value", "time", "status"]
+    for line in datas_list:
+        print(line[0])
+        if id_pos == int(line[0]):
+            datas_list[id_pos-1] = [id_, title, story, accept, value, time, status]
+    print(datas_list)
+    with open("datas.csv", "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(datas_list)
+    return redirect('/')
+
+
 @app.route('/story/<id>')
 def route_story_id(id=None):
     id_pos = int(id)
@@ -79,7 +106,8 @@ def route_story_id(id=None):
     edit = True
     datas_list = datas_reader()
     edit_data_list = (datas_list[id_pos-1])
-    return render_template('form.html', id_pos=id_pos, edit=edit, edit_data_list=edit_data_list)
+    fieldnames = ["id_", "title", "story", "accept", "value", "time", "status"]
+    return render_template('form.html', id_pos=id_pos, edit=edit, edit_data_list=edit_data_list, fieldname=fieldnames)
 
 
 if __name__ == "__main__":
