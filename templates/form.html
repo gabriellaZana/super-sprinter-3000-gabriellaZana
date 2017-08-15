@@ -4,20 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    {% if not edit %}
-    <title>Super Sprinter 3000 - Add new Story</title>
-    {% elif edit %}
-    <title>Super Sprinter 3000 - Edit Story</title>
-    {% endif %}
+    <title>{{ 'Super Sprinter 3000 - Add new Story' if not edit else 'Super Sprinter 3000 - Edit Story' }}</title>
 </head>
 
 
 <body>
-{% if not edit %}
-<h1>User Story manager - Add new Story</h1>
-{% else %}
-<h1>User Story manager - Edit Story</h1>
-{% endif %}
+<h1>{{ 'User Story manager - Add new Story' if not edit else 'User Story manager - Edit Story' }}</h1>
 
 {% if not edit %}
 <form action="/save-story" method="POST">

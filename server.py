@@ -35,9 +35,12 @@ def route_list():
 def route_delete(id=None):
     datas_list = datas_reader()
     id_pos = int(id)
-    for row in datas_list:
-        if row[0] == str(id_pos):
-            datas_list[id_pos-1] = []
+    for line in datas_list:
+        if id_pos == int(line[0]):
+            datas_list[id_pos-1].append("deleted")
+    with open("datas.csv", "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(datas_list)
     return redirect('/')
 
 
@@ -75,10 +78,7 @@ def route_save():
 @app.route('/edit-story/<id>', methods=['POST'])
 def route_edit_story(id=None):
     id_pos = int(id)
-    with open("datas.csv", "r") as csvfile:
-        reader = csv.reader(csvfile)
-        datas_list = list(reader)
-    print(datas_list)
+    datas_list = datas_reader()
     if request.method == 'POST':
                         title = request.form['title']
                         story = request.form['story']
@@ -92,7 +92,6 @@ def route_edit_story(id=None):
         print(line[0])
         if id_pos == int(line[0]):
             datas_list[id_pos-1] = [id_, title, story, accept, value, time, status]
-    print(datas_list)
     with open("datas.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(datas_list)

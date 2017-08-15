@@ -26,7 +26,8 @@
         </tr>
     </thead>
     <tbody>
-    {%for line in datas_list%}
+    {% for line in datas_list %}
+    {% if line[7] is not defined %}
         <tr>
             <td>{{line[0]}}</td>
             <td>{{line[1]}}</td>
@@ -35,11 +36,11 @@
             <td>{{line[4]}}</td>
             <td>{{line[5]}}</td>
             <td>{{line[6]}}</td>
-            <td>{{line[7]}}</td>
             <td><a href="/story/{{ line[0] }}"><img src="http://icongal.com/gallery/download/93429/256/png" width="20" height="20"></a></td>
-            <td><img src="http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_563973ab0e1a6-210x210.png" width="20" height="20"></td>
+            <td><a href="/delete/{{ line[0] }}"><img src="http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_563973ab0e1a6-210x210.png" width="20" height="20"></td>
         </tr>
-    {%endfor%}
+    {% endif %}
+    {% endfor %}
     </tbody>
 </table>
 
